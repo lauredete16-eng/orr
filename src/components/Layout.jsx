@@ -17,13 +17,13 @@ import {
 import { useStore } from '../store.jsx'
 
 const links = [
-  ['/app', 'Tableau de bord', LayoutDashboard, true],
-  ['/app/or', 'Or', Coins],
-  ['/app/diamants', 'Diamants', Gem],
-  ['/app/estimations', 'Estimations', Scale],
+  ['/app', 'Dashboard', LayoutDashboard, true],
+  ['/app/or', 'Gold', Coins],
+  ['/app/diamants', 'Diamonds', Gem],
+  ['/app/estimations', 'Valuations', Scale],
   ['/app/documents', 'Documents', FileText],
-  ['/app/historique', 'Historique', History],
-  ['/app/profil', 'Profil', User],
+  ['/app/historique', 'History', History],
+  ['/app/profil', 'Profile', User],
 ]
 
 export default function Layout() {
@@ -40,7 +40,7 @@ export default function Layout() {
     data?.profile?.org,
   ]
     .filter(Boolean)
-    .join(' · ') || 'Mon espace'
+    .join(' · ') || 'My Account'
 
   return (
     <div className="shell">
@@ -76,7 +76,7 @@ export default function Layout() {
             }}
           >
             <LogOut size={18} />
-            <span>Se déconnecter</span>
+            <span>Log Out</span>
           </button>
         </aside>
 
@@ -85,7 +85,7 @@ export default function Layout() {
             <button
               className="icon menu"
               onClick={() => setOpen(!open)}
-              aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
+              aria-label={open ? 'Close menu' : 'Open menu'}
             >
               {open ? <X /> : <Menu />}
             </button>

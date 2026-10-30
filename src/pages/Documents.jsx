@@ -4,44 +4,47 @@ import { Download, FileText } from 'lucide-react'
 import { PageHead } from '../components/UI.jsx'
 
 const documentText = `
-RÉCAPITULATIF DES INFORMATIONS TRANSMISES
+SUMMARY OF INFORMATION PROVIDED
 
-1. INFORMATIONS RELATIVES À LA SOCIÉTÉ
+1. COMPANY INFORMATION
 
-Pays : Finlande
-Ville : Helsinki
-Adresse communiquée : Kasarmikatu 21, 00130 Helsinki, Finlande
+Country: Finland
+City: Helsinki
+Address provided: Kasarmikatu 21, 00130 Helsinki, Finland
 
-2. INFORMATIONS RELATIVES À LA SUCCESSION
+2. ESTATE INFORMATION
 
-Nom communiqué du défunt : PARK Haneul
-Date de décès communiquée : 21/05/2024
+Reported name of the deceased: PARK Haneul
+Reported date of death: 21/05/2024
 
-Bénéficiaire indiqué : MARIE PARK
-Adresse communiquée : 1–2 Ashburn Gardens,
-London SW7 4DG, Royaume-Uni
+Named beneficiary: MARIE PARK
+Address provided: 1–2 Ashburn Gardens,
+London SW7 4DG, United Kingdom
 
-3. BIENS MENTIONNÉS
+3. ASSETS MENTIONED
 
-Or :
-Quantité déclarée : 150 kg
-Valeur communiquée : 18 070 126,50 €
+Gold:
+Declared quantity: 150 kg
+Reported value: €18,070,126.50
 
-Une autre estimation communiquée pour l'or :
-17 541 528 €
+Another reported valuation for the gold:
+€17,541,528
 
-Diamants rouges :
-Quantité et description communiquées :
-10 diamants rouges de 1 carat chacun.
-Une mention distincte indique également 10 kg.
-Valeur annoncée : 18 000 000 €
+Red diamonds:
+Quantity and description provided:
+10 red diamonds, each weighing 1 carat.
+A separate entry also mentions 10 kg.
+Reported value: €18,000,000
 
-4. FRAIS MENTIONNÉS
+4. FEES MENTIONED
 
-Montant communiqué : 75 000 €
-Motif annoncé : frais de déblocage.
+Amount communicated: €75,000
+Stated reason: Account unblocking fees.
 
-
+Note: The information and amounts above have been reproduced
+as provided. They have not been independently verified.
+Any payment request should be confirmed directly with the
+relevant competent authorities.
 `
 
 export default function Documents() {
@@ -56,21 +59,21 @@ export default function Documents() {
     const link = document.createElement('a')
 
     link.href = url
-    link.download = 'recapitulatif-informations.txt'
+    link.download = 'information-summary.txt'
 
     document.body.appendChild(link)
     link.click()
     link.remove()
 
     URL.revokeObjectURL(url)
-    setMessage('Téléchargement lancé.')
+    setMessage('Download started.')
   }
 
   return (
     <>
       <PageHead
         title="Documents"
-        sub="Consultez et téléchargez le récapitulatif."
+        sub="View and download the information summary."
       />
 
       <section className="card narrow document-download-card">
@@ -79,10 +82,11 @@ export default function Documents() {
         </div>
 
         <div className="document-download-content">
-          <h2>Récapitulatif des informations</h2>
+          <h2>Information Summary</h2>
+
           <p>
-            Retrouvez les informations communiquées concernant
-            la société, la succession, les biens et les montants mentionnés.
+            Find the information provided regarding the company,
+            the estate, the assets and the amounts mentioned.
           </p>
 
           <button
@@ -91,7 +95,7 @@ export default function Documents() {
             onClick={downloadDocument}
           >
             <Download size={18} />
-            Télécharger le document
+            Download Document
           </button>
 
           {message && <p role="status">{message}</p>}

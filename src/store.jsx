@@ -8,7 +8,7 @@ const Ctx = createContext(null)
 export const useStore = () => useContext(Ctx)
 
 export const fmt = (n) =>
-  new Intl.NumberFormat('fr-FR', {
+  new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'EUR',
     minimumFractionDigits: 2,
@@ -24,7 +24,7 @@ export const goldValue = (row, spot) => {
   return weightG * qty * (purity / 1000) * pricePerGram
 }
 
-// Version du stockage
+// Storage version
 const DATA_KEY = 'orvane-data-v3'
 const OLD_DATA_KEY = 'orvane-data-v2'
 const SESSION_KEY = 'orvane-session'
@@ -46,7 +46,7 @@ const read = (key, fallback) => {
   }
 }
 
-// Les valeurs de CONFIG.profile sont prioritaires.
+// CONFIG.profile values take priority.
 const makeProfile = (profile = {}) => ({
   ...profile,
   ...CONFIG.profile,
@@ -54,7 +54,7 @@ const makeProfile = (profile = {}) => ({
   spot: Number(profile.spot ?? seed.profile?.spot) || 0,
 })
 
-// Migration et normalisation des données.
+// Data migration and normalization.
 const migrateData = (saved) => {
   const data = { ...seed, ...saved }
 
@@ -64,7 +64,7 @@ const migrateData = (saved) => {
     }
   }
 
-  // Actualiser les statuts des documents ciblés.
+  // Set the review status of the specified documents.
   data.documents = data.documents.map((doc) => {
     const isTargetDocument = [
       'Documents successoraux de PARK Haneul',
@@ -72,17 +72,17 @@ const migrateData = (saved) => {
     ].includes(doc.name)
 
     return isTargetDocument
-      ? { ...doc, status: 'Vérifié' }
+      ? { ...doc, status: 'Pending review' }
       : doc
   })
 
-  // Actualiser les statuts des estimations ciblées.
+  // Set the review status of the specified valuations.
   data.valuations = data.valuations.map((item) => {
     const isTargetValuation =
       ['AU-001', 'DI-001'].includes(item.asset)
 
     return isTargetValuation
-      ? { ...item, status: 'Vérifié' }
+      ? { ...item, status: 'Pending review' }
       : item
   })
 
@@ -94,21 +94,21 @@ const migrateData = (saved) => {
 }
 
 const makeInitialData = () => {
-  // Charger la version actuelle si elle existe.
+  // Load the current version if it exists.
   const current = read(DATA_KEY, null)
 
   if (current && COLS.every((col) => Array.isArray(current[col]))) {
     return migrateData(current)
   }
 
-  // Sinon, récupérer et migrer l'ancienne version.
+  // Otherwise, retrieve and migrate the previous version.
   const old = read(OLD_DATA_KEY, null)
 
   if (old && COLS.every((col) => Array.isArray(old[col]))) {
     return migrateData(old)
   }
 
-  // Première installation.
+  // First installation.
   return migrateData(seed)
 }
 
@@ -129,12 +129,12 @@ export function StoreProvider({ children }) {
     () => sessionStorage.getItem(SESSION_KEY) === '1'
   )
 
-  // Sauvegarder les données normalisées.
+  // Save normalized data.
   useEffect(() => {
     try {
       localStorage.setItem(DATA_KEY, JSON.stringify(data))
     } catch (error) {
-      console.error('Impossible de sauvegarder les données :', error)
+      console.error('Unable to save data:', error)
     }
   }, [data])
 
@@ -178,7 +178,7 @@ export function StoreProvider({ children }) {
 
       return log(
         { ...currentData, [col]: updatedRows },
-        exists ? 'Modification' : 'Création',
+        exists ? 'Modification' : 'Creation',
         label(savedItem)
       )
     })
@@ -200,7 +200,7 @@ export function StoreProvider({ children }) {
           ...currentData,
           [col]: rows.filter((entry) => entry.id !== id),
         },
-        'Suppression',
+        'Deletion',
         label(item)
       )
     })
@@ -215,14 +215,14 @@ export function StoreProvider({ children }) {
             ...profile,
           }),
         },
-        'Profil',
-        'Profil mis à jour'
+        'Profile',
+        'Profile updated'
       )
     )
 
   const login = (id, password) => {
     if (id !== CONFIG.id || password !== CONFIG.password) {
-      return 'Identifiant ou mot de passe incorrect.'
+      return 'Incorrect user ID or password.'
     }
 
     sessionStorage.setItem(SESSION_KEY, '1')
@@ -245,7 +245,7 @@ export function StoreProvider({ children }) {
     const link = document.createElement('a')
 
     link.href = url
-    link.download = `orvane-sauvegarde-${today()}.json`
+    link.download = `orvane-backup-${today()}.json`
 
     document.body.appendChild(link)
     link.click()
@@ -259,7 +259,7 @@ export function StoreProvider({ children }) {
       const imported = JSON.parse(await file.text())
 
       if (!COLS.every((col) => Array.isArray(imported[col]))) {
-        return 'Fichier de sauvegarde invalide.'
+        return 'Invalid backup file.'
       }
 
       const importedData = migrateData({
@@ -268,12 +268,12 @@ export function StoreProvider({ children }) {
       })
 
       setData(
-        log(importedData, 'Import', 'Sauvegarde importée')
+        log(importedData, 'Import', 'Backup imported')
       )
 
       return null
     } catch {
-      return 'Fichier illisible.'
+      return 'Unable to read the file.'
     }
   }
 

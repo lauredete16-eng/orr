@@ -26,13 +26,13 @@ export default function Dashboard() {
 
   const spot = Number(profile.spot) || 0
 
-  // Nombre total de lingots.
+  // Total number of gold bars.
   const lingotCount = gold.reduce(
     (sum, row) => sum + (Number(row.qty) || 0),
     0
   )
 
-  // Poids total en kilogrammes.
+  // Total weight in kilograms.
   const kg = gold.reduce((sum, row) => {
     const declaredWeight = Number(row.declaredTotalWeightKg)
 
@@ -46,13 +46,13 @@ export default function Dashboard() {
     )
   }, 0)
 
-  // Valeur déclarée totale de l'or.
+  // Total declared value of gold.
   const goldV = gold.reduce(
     (sum, row) => sum + (Number(row.declaredValue) || 0),
     0
   )
 
-  // Poids total des diamants en carats.
+  // Total diamond weight in carats.
   const ct = diamonds.reduce(
     (sum, row) =>
       sum +
@@ -60,7 +60,7 @@ export default function Dashboard() {
     0
   )
 
-  // Valeur déclarée totale des diamants.
+  // Total declared value of diamonds.
   const diaV = diamonds.reduce(
     (sum, row) => sum + Math.max(0, Number(row.estValue) || 0),
     0
@@ -74,11 +74,11 @@ export default function Dashboard() {
   const diamondPercent = total > 0 ? 100 - goldPercent : 0
 
   const pendingValuations = valuations.filter(
-    (item) => item.status === 'Planifiée'
+    (item) => item.status === 'Scheduled'
   ).length
 
   const pendingDocuments = documents.filter(
-    (item) => item.status === 'À relire'
+    (item) => item.status === 'Needs review'
   ).length
 
   const latestHistory = [...history]
@@ -90,18 +90,18 @@ export default function Dashboard() {
     .slice(0, 5)
 
   const number = (value, digits = 0) =>
-    Number(value || 0).toLocaleString('fr-FR', {
+    Number(value || 0).toLocaleString('en-US', {
       maximumFractionDigits: digits,
     })
 
   return (
     <>
       <PageHead
-        title="Tableau de bord"
-        sub="Vue d’ensemble des actifs déclarés et de leur suivi."
+        title="Dashboard"
+        sub="Overview of declared assets and their tracking."
       />
 
-      {/* État du compte */}
+      {/* Account status */}
       <section className="account-status-card">
         <div className="account-status-icon">
           <ShieldAlert size={28} />
@@ -109,13 +109,17 @@ export default function Dashboard() {
 
         <div className="account-status-content">
           <span className="account-status-label">
-            ÉTAT DU COMPTE
+            ACCOUNT STATUS
           </span>
 
-          <h2>Compte bloqué</h2>
+          <h2>Account blocked</h2>
 
           <p>
-            Votre compte est actuellement bloqué. Vous devez vous acquiter des frais de déblocages s'élevant à 75 000 Euro. pour plus d'informations veuillez contacter le servce client.
+            Your account is currently blocked. A fee of €75,000
+            is being requested to unblock it. Please contact
+            customer support for further information and
+            independently verify any payment request before
+            making a payment.
           </p>
         </div>
       </section>
@@ -124,21 +128,21 @@ export default function Dashboard() {
         <div className="dashboard-welcome">
           <div>
             <span className="dashboard-eyebrow">
-              VUE D’ENSEMBLE
+              OVERVIEW
             </span>
 
-            <h2>Vos actifs, en un coup d’œil.</h2>
+            <h2>Your assets at a glance.</h2>
 
             <p>
-              Consultez les quantités, les poids, les valeurs déclarées
-              et les dernières opérations enregistrées.
+              View quantities, weights, declared values
+              and the latest recorded transactions.
             </p>
           </div>
 
           <div className="dashboard-total">
-            <span>Valeur déclarée totale</span>
+            <span>Total declared value</span>
             <strong>{fmt(total)}</strong>
-            <small>Or et diamants réunis</small>
+            <small>Gold and diamonds combined</small>
           </div>
         </div>
       </section>
@@ -146,30 +150,30 @@ export default function Dashboard() {
       <section className="grid4 dashboard-stats">
         <Stat
           icon={Coins}
-          label="Or déclaré"
-          value={`${number(lingotCount)} lingots · ${number(kg, 2)} kg`}
+          label="Declared gold"
+          value={`${number(lingotCount)} bars · ${number(kg, 2)} kg`}
           note={fmt(goldV)}
         />
 
         <Stat
           icon={Gem}
-          label="Diamants déclarés"
+          label="Declared diamonds"
           value={`${number(ct, 2)} ct`}
           note={fmt(diaV)}
         />
 
         <Stat
           icon={Scale}
-          label="Estimations"
+          label="Valuations"
           value={valuations.length}
-          note={`${pendingValuations} estimation(s) planifiée(s)`}
+          note={`${pendingValuations} scheduled valuation(s)`}
         />
 
         <Stat
           icon={FileText}
           label="Documents"
           value={documents.length}
-          note={`${pendingDocuments} document(s) à relire`}
+          note={`${pendingDocuments} document(s) requiring review`}
         />
       </section>
 
@@ -178,13 +182,13 @@ export default function Dashboard() {
           <div className="section-heading">
             <div>
               <span className="dashboard-eyebrow">
-                RÉPARTITION
+                BREAKDOWN
               </span>
 
-              <h3>Composition des actifs</h3>
+              <h3>Asset composition</h3>
 
               <p className="muted">
-                Répartition selon les valeurs déclarées.
+                Breakdown based on declared values.
               </p>
             </div>
 
@@ -192,14 +196,14 @@ export default function Dashboard() {
           </div>
 
           <div className="portfolio-total">
-            <span>Total déclaré</span>
+            <span>Total declared value</span>
             <strong>{fmt(total)}</strong>
           </div>
 
           <div
             className="bar portfolio-bar"
             role="img"
-            aria-label={`Or : ${goldPercent} %, diamants : ${diamondPercent} %`}
+            aria-label={`Gold: ${goldPercent}%, diamonds: ${diamondPercent}%`}
           >
             <span style={{ width: `${goldPercent}%` }} />
           </div>
@@ -209,7 +213,7 @@ export default function Dashboard() {
               <span className="legend-dot gold-dot" />
 
               <div>
-                <span>Or</span>
+                <span>Gold</span>
                 <strong>{goldPercent} %</strong>
                 <small>{fmt(goldV)}</small>
               </div>
@@ -219,29 +223,25 @@ export default function Dashboard() {
               <span className="legend-dot diamond-dot" />
 
               <div>
-                <span>Diamants</span>
+                <span>Diamonds</span>
                 <strong>{diamondPercent} %</strong>
                 <small>{fmt(diaV)}</small>
               </div>
             </div>
           </div>
 
-          <p className="muted">
-            Cours de référence configuré : {fmt(spot)} par gramme.
-            Les montants affichés sont des valeurs déclarées et ne
-            constituent pas une expertise indépendante.
-          </p>
+          
         </div>
 
         <div className="card dashboard-card">
           <div className="section-heading">
             <div>
-              <span className="dashboard-eyebrow">SUIVI</span>
+              <span className="dashboard-eyebrow">TRACKING</span>
 
-              <h3>À ne pas oublier</h3>
+              <h3>Items to follow up</h3>
 
               <p className="muted">
-                Éléments nécessitant une vérification.
+                Items requiring review.
               </p>
             </div>
 
@@ -256,7 +256,7 @@ export default function Dashboard() {
             <span className="attention-content">
               <strong>Documents</strong>
               <small>
-                {pendingDocuments} document(s) à relire
+                {pendingDocuments} document(s) requiring review
               </small>
             </span>
 
@@ -269,9 +269,9 @@ export default function Dashboard() {
             </span>
 
             <span className="attention-content">
-              <strong>Estimations</strong>
+              <strong>Valuations</strong>
               <small>
-                {pendingValuations} estimation(s) planifiée(s)
+                {pendingValuations} scheduled valuation(s)
               </small>
             </span>
 
@@ -284,12 +284,12 @@ export default function Dashboard() {
         <div className="card dashboard-card">
           <div className="section-heading">
             <div>
-              <span className="dashboard-eyebrow">ACTIVITÉ</span>
-              <h3>Dernières opérations</h3>
+              <span className="dashboard-eyebrow">ACTIVITY</span>
+              <h3>Recent transactions</h3>
             </div>
 
             <Link to="/app/historique" className="section-link">
-              Tout voir <ArrowUpRight size={16} />
+              View all <ArrowUpRight size={16} />
             </Link>
           </div>
 
@@ -301,12 +301,12 @@ export default function Dashboard() {
 
                   <div className="activity-content">
                     <strong>
-                      {item.detail || 'Opération enregistrée'}
+                      {item.detail || 'Recorded transaction'}
                     </strong>
 
                     <small>
-                      {item.date || 'Date non renseignée'} ·{' '}
-                      {item.action || 'Action non précisée'}
+                      {item.date || 'Date not provided'} ·{' '}
+                      {item.action || 'Action not specified'}
                     </small>
                   </div>
                 </li>
@@ -314,7 +314,7 @@ export default function Dashboard() {
             </ul>
           ) : (
             <p className="muted empty-state">
-              Aucune opération enregistrée.
+              No transactions recorded.
             </p>
           )}
         </div>
@@ -323,11 +323,11 @@ export default function Dashboard() {
           <div className="section-heading">
             <div>
               <span className="dashboard-eyebrow">DOCUMENTS</span>
-              <h3>Documents récents</h3>
+              <h3>Recent documents</h3>
             </div>
 
             <Link to="/app/documents" className="section-link">
-              Tout voir <ArrowUpRight size={16} />
+              View all <ArrowUpRight size={16} />
             </Link>
           </div>
 
@@ -341,21 +341,21 @@ export default function Dashboard() {
 
                   <div className="activity-content">
                     <strong>
-                      {item.name || 'Document sans nom'}
+                      {item.name || 'Unnamed document'}
                     </strong>
 
                     <small>
-                      {item.type || 'Type non renseigné'}
+                      {item.type || 'Type not provided'}
                     </small>
                   </div>
 
-                  <Badge>{item.status || 'À vérifier'}</Badge>
+                  <Badge>{item.status || 'Pending review'}</Badge>
                 </li>
               ))}
             </ul>
           ) : (
             <p className="muted empty-state">
-              Aucun document enregistré.
+              No documents recorded.
             </p>
           )}
         </div>

@@ -9,8 +9,8 @@ export default function Profile() {
   return (
     <>
       <PageHead
-        title="Profil"
-        sub="Informations du titulaire du compte."
+        title="Profile"
+        sub="Account holder information."
       />
 
       <section className="card narrow profile-card">
@@ -21,36 +21,36 @@ export default function Profile() {
 
           <div>
             <span className="dashboard-eyebrow">
-              INFORMATIONS DU COMPTE
+              ACCOUNT INFORMATION
             </span>
-            <h2>{profile.name || 'Non renseigné'}</h2>
+            <h2>{profile.name || 'Not provided'}</h2>
           </div>
         </div>
 
         <div className="profile-details">
           <div className="profile-field">
-            <span>ID du compte</span>
-            <strong>{profile.id || 'Non renseigné'}</strong>
+            <span>Account ID</span>
+            <strong>{profile.id || 'Not provided'}</strong>
           </div>
 
           <div className="profile-field">
-            <span>Nom complet</span>
-            <strong>{profile.name || 'Non renseigné'}</strong>
+            <span>Full Name</span>
+            <strong>{profile.name || 'Not provided'}</strong>
           </div>
 
           <div className="profile-field">
-            <span>Pays</span>
-            <strong>{profile.country || 'Non renseigné'}</strong>
+            <span>Country</span>
+            <strong>{profile.country || 'Not provided'}</strong>
           </div>
 
           <div className="profile-field">
-            <span>Ville</span>
-            <strong>{profile.city || 'Non renseigné'}</strong>
+            <span>City</span>
+            <strong>{profile.city || 'Not provided'}</strong>
           </div>
 
           <div className="profile-field">
-            <span>Numéro de téléphone</span>
-            <strong>{profile.phone || 'Non renseigné'}</strong>
+            <span>Phone Number</span>
+            <strong>{profile.phone || 'Not provided'}</strong>
           </div>
         </div>
       </section>

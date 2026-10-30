@@ -25,16 +25,16 @@ export default function Login() {
         <Link to="/" className="login-brand">
           <img
             src="image/L1.jpeg"
-            alt="Logo Voima Gold"
+            alt="Voima Gold Logo"
             className="login-logo"
           />
           <span className="brand dark">Voima Gold</span>
         </Link>
 
-        <h1>Connexion</h1>
+        <h1>Log In</h1>
 
         <label>
-          Identifiant
+          User ID
           <input
             inputMode="numeric"
             autoComplete="username"
@@ -45,7 +45,7 @@ export default function Login() {
         </label>
 
         <label>
-          Mot de passe
+          Password
           <input
             type="password"
             inputMode="numeric"
@@ -63,7 +63,7 @@ export default function Login() {
         )}
 
         <button className="btn" type="submit">
-          Se connecter
+          Log In
         </button>
       </form>
     </div>

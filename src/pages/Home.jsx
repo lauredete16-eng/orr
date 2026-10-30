@@ -5,23 +5,23 @@ import { ShieldCheck, Gem, FileText, Scale } from 'lucide-react'
 const feats = [
   [
     Gem,
-    'Inventaire précis',
-    'Lingots, pièces et pierres avec référence, pureté, poids et emplacement.',
+    'Detailed Inventory',
+    'Gold bars, coins and gemstones with reference, purity, weight and location.',
   ],
   [
     Scale,
-    'Estimations suivies',
-    'Gardez chaque expertise, son auteur, sa date et son montant.',
+    'Tracked Valuations',
+    'Keep track of every appraisal, including its author, date and amount.',
   ],
   [
     FileText,
-    'Documents classés',
-    'Certificats, rapports et contrats au même endroit, avec leur statut.',
+    'Organized Documents',
+    'Certificates, reports and contracts in one place, with their status.',
   ],
   [
     ShieldCheck,
-    'Historique complet',
-    'Chaque ajout, modification ou suppression est daté.',
+    'Complete History',
+    'Every addition, modification or deletion is timestamped.',
   ],
 ]
 
@@ -30,34 +30,33 @@ export default function Home() {
     <div className="public">
       <header className="pubtop">
         <Link to="/" className="home-brand">
-          
           <span className="brand dark">Voima Gold</span>
         </Link>
 
         <Link className="btn" to="/connexion">
-          Se connecter
+          Log In
         </Link>
       </header>
 
       <section className="hero">
         <img
           src="image/L1.jpeg"
-          alt="Logo Voima Gold"
+          alt="Voima Gold Logo"
           className="hero-logo"
         />
 
         <h1>
-          Vos actifs précieux, inventoriés avec la rigueur d’un coffre.
+          Your valuable assets, inventoried with the precision of a secure vault.
         </h1>
 
         <p>
-          Voima Gold vous permet de suivre votre or, vos diamants,
-          leurs estimations et leurs justificatifs. Vos données sont
-          enregistrées sur cet appareil.
+          Voima Gold allows you to track your gold, diamonds,
+          their valuations and supporting documents. Your data is
+          stored on this device.
         </p>
 
         <Link className="btn" to="/connexion">
-          Accéder à mon espace
+          Access My Account
         </Link>
       </section>
 

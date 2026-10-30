@@ -3,16 +3,16 @@ import { useStore } from '../store.jsx'
 import { PageHead } from '../components/UI.jsx'
 
 const initialHistory = [
-  { id: 1, date: '2020-03-12', action: 'Ouverture du dossier', detail: 'Date et événement à confirmer' },
-  { id: 2, date: '2020-08-24', action: 'Collecte de documents', detail: 'Date et événement à confirmer' },
-  { id: 3, date: '2020-12-15', action: 'Contrôle administratif', detail: 'Date et événement à confirmer' },
-  { id: 4, date: '2021-04-09', action: 'Mise à jour du dossier', detail: 'Date et événement à confirmer' },
-  { id: 5, date: '2021-10-18', action: 'Vérification documentaire', detail: 'Date et événement à confirmer' },
-  { id: 6, date: '2022-02-07', action: 'Examen des actifs déclarés', detail: 'Date et événement à confirmer' },
-  { id: 7, date: '2022-06-21', action: 'Évaluation des actifs', detail: 'Date et événement à confirmer' },
-  { id: 8, date: '2022-11-14', action: 'Suivi documentaire', detail: 'Date et événement à confirmer' },
-  { id: 9, date: '2023-04-17', action: 'Revue du dossier', detail: 'Date et événement à confirmer' },
-  { id: 10, date: '2023-09-26', action: 'Mise à jour du suivi', detail: 'Date et événement à confirmer' },
+  { id: 1, date: '2020-03-12', action: 'File opening', detail: 'Date and event to be confirmed' },
+  { id: 2, date: '2020-08-24', action: 'Document collection', detail: 'Date and event to be confirmed' },
+  { id: 3, date: '2020-12-15', action: 'Administrative review', detail: 'Date and event to be confirmed' },
+  { id: 4, date: '2021-04-09', action: 'File update', detail: 'Date and event to be confirmed' },
+  { id: 5, date: '2021-10-18', action: 'Document verification', detail: 'Date and event to be confirmed' },
+  { id: 6, date: '2022-02-07', action: 'Review of declared assets', detail: 'Date and event to be confirmed' },
+  { id: 7, date: '2022-06-21', action: 'Asset valuation', detail: 'Date and event to be confirmed' },
+  { id: 8, date: '2022-11-14', action: 'Document follow-up', detail: 'Date and event to be confirmed' },
+  { id: 9, date: '2023-04-17', action: 'File review', detail: 'Date and event to be confirmed' },
+  { id: 10, date: '2023-09-26', action: 'Tracking update', detail: 'Date and event to be confirmed' },
 ]
 
 export default function History() {
@@ -31,8 +31,8 @@ export default function History() {
   return (
     <>
       <PageHead
-        title="Historique"
-        sub="Historique et suivi administratif du dossier."
+        title="History"
+        sub="Administrative history and file tracking."
       />
 
       <div className="card flush" style={{ overflowX: 'auto' }}>
@@ -40,8 +40,8 @@ export default function History() {
           <thead>
             <tr>
               <th style={{ padding: '14px', textAlign: 'left' }}>Date</th>
-              <th style={{ padding: '14px', textAlign: 'left' }}>Opération</th>
-              <th style={{ padding: '14px', textAlign: 'left' }}>Détail</th>
+              <th style={{ padding: '14px', textAlign: 'left' }}>Operation</th>
+              <th style={{ padding: '14px', textAlign: 'left' }}>Details</th>
             </tr>
           </thead>
 
